@@ -9,7 +9,16 @@ monitor = sct.monitors[1]
 
 tile = cv2.imread('./samples/tile.png', cv2.IMREAD_GRAYSCALE)
 cleared = cv2.imread('./samples/cleared.png', cv2.IMREAD_GRAYSCALE)
-
+directions = [
+    (-1, 0),
+    (1, 0),
+    (0, -1),
+    (0, 1),
+    (-1, -1),
+    (-1, 1),
+    (1, -1),
+    (1, 1)
+]
 number_templates = {}
 for n in range(1, 9):
     img = cv2.imread(f'./samples/{n}.png', cv2.IMREAD_GRAYSCALE)
@@ -85,8 +94,21 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 xs, ys, dx, dy, rows, cols = find_board(gray)
 print(f"Detected grid: {rows}x{cols}")
 
-def add_flags():
-    return
+def add_flags(board):
+     for i in range(len(board)):
+        for j in range(len(board[i])):
+            if(board[i][j]!=0 and board[i][j]!=-1):
+                undiscovered = set()          
+                for dr, dc in directions:
+                    newI = i + dr
+                    newJ = j+dc
+                    if 0 <= newI < rows and 0 <= newJ < cols and board[newI][newJ]==-1:
+                        undiscovered.add((newI,newJ))
+                if len(undiscovered) == board[i][j]:
+                    for newI,newJ in undiscovered:
+                        board[newI][newJ] = 9
+
+
 
 while True:
     img = capture_screen()
@@ -94,6 +116,7 @@ while True:
     board = classify_cells(gray, xs, ys, dx, dy)
 
     print("\n" + "=" * 40)
+    add_flags(board)
     for row in board:
         print(" ".join(f"{x:2}" for x in row))
     print("=" * 40)
