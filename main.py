@@ -97,7 +97,7 @@ print(f"Detected grid: {rows}x{cols}")
 def add_flags(board):
      for i in range(len(board)):
         for j in range(len(board[i])):
-            if(board[i][j]!=0 and board[i][j]!=-1):
+            if(board[i][j]!=0 and board[i][j]!=-1 and board[i][j]!=9):
                 undiscovered = set()          
                 for dr, dc in directions:
                     newI = i + dr
@@ -108,6 +108,25 @@ def add_flags(board):
                     for newI,newJ in undiscovered:
                         board[newI][newJ] = 9
 
+def safe_clicks(board):
+         for i in range(len(board)):
+            for j in range(len(board[i])):
+                if(board[i][j]!=0 and board[i][j]!=-1 and board[i][j]!=9):
+                    flags = set()          
+                    for dr, dc in directions:
+                        newI = i + dr
+                        newJ = j+dc
+                        if 0 <= newI < rows and 0 <= newJ < cols and board[newI][newJ]==9:
+                            flags.add((newI,newJ))
+                    safe = set()     
+                    if len(flags) == board[i][j]:
+                        for dr, dc in directions:
+                            newI = i + dr
+                            newJ = j+dc
+                            if 0 <= newI < rows and 0 <= newJ < cols and board[newI][newJ]==-1:
+                                safe.add((newI,newJ))
+                    for safeI, safeJ in safe:
+                        print(safeI,safeJ)
 
 
 while True:
@@ -117,6 +136,7 @@ while True:
 
     print("\n" + "=" * 40)
     add_flags(board)
+    safe_clicks(board)
     for row in board:
         print(" ".join(f"{x:2}" for x in row))
     print("=" * 40)
