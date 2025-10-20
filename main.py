@@ -191,7 +191,6 @@ def guess_move(board, xs, ys, dx, dy):
     cx, cy = cell_center(i, j, xs, ys, dx, dy)
     pyautogui.moveTo(cx, cy)
     pyautogui.click()
-    print(f"Guessed ({i},{j}) with estimated mine prob {p:.2f}")
     return True
 
 rand_i = random.randint(0, rows - 1)
@@ -207,7 +206,7 @@ def restart(gray_board):
     cx, cy = x + loss.shape[1] // 2, y + loss.shape[0] // 2
     pyautogui.moveTo(cx, cy)
     pyautogui.click()
-    time.sleep(0.5)
+    time.sleep(0.2)
 def detect_win_loss(gray_board):
     res_win = cv2.matchTemplate(gray_board, win, cv2.TM_CCOEFF_NORMED)
     res_loss = cv2.matchTemplate(gray_board, loss, cv2.TM_CCOEFF_NORMED)
@@ -225,13 +224,13 @@ while True:
         break
     if detect_win_loss(gray) == "loss":
         restart(gray)
-        time.sleep(1)
+        time.sleep(0.2)
         rand_i = random.randint(0, rows - 1)
         rand_j = random.randint(0, cols - 1)
         x, y = cell_center(rand_i, rand_j, xs, ys, dx, dy)
         pyautogui.moveTo(x, y)
         pyautogui.click()
-        time.sleep(0.3)
+        time.sleep(0.2)
         continue
     board = classify_cells(gray, xs, ys, dx, dy)
     prev_board = board.copy()
