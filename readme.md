@@ -14,4 +14,9 @@ Click on the preview image to open a video demo on YouTube.
 [![Expert Demo](https://img.youtube.com/vi/g2JZk6oI93U/0.jpg)](https://youtu.be/g2JZk6oI93U)
 # packages
 
-Run ``pip install opencv-python numpy mss keyboard pyautogui`
+Run ```pip install opencv-python numpy mss keyboard pyautogui```
+
+# How to run
+1. Download
+2. install packages
+3. run ```python main.py``` in the root directory
