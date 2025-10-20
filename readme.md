@@ -1,6 +1,6 @@
 # minesweeper solver
 Solves minesweeper boards on [https://minesweeperonline.com/#](https://minesweeperonline.com/#)
-
+When presented with no certain answer, it will calculate the board state and click the square that is least likely to contain a mine. Sometimes it is unlucky as shown in the expert demo.
 # Samples
 ## Easy  
 [![Easy Demo](https://img.youtube.com/vi/i4IkE0b1CYM/0.jpg)](https://youtu.be/i4IkE0b1CYM)
